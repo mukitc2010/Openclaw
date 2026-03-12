@@ -53,23 +53,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${headingFont.variable} ${bodyFont.variable}`}>
         <AuthProvider>
           <ToastProvider>
-            <main>
-              <header className="shell-header">
-                <div>
-                  <span className="badge">OpenClaw</span>
-                  <h1 className="shell-title">Enterprise AI Software Delivery Platform</h1>
-                  <p className="shell-subtitle">
-                    Multi-agent planning from idea to Agile and GitHub delivery.
-                  </p>
-                </div>
-                <div className="shell-header-actions">
-                  <QuickActions />
-                  <UserBar />
+            <div className="app-shell">
+              <header className="app-topbar">
+                <div className="topbar-inner">
+                  <a href="/" className="topbar-brand">
+                    <span className="brand-mark">OC</span>
+                    <span className="brand-name">OpenClaw</span>
+                  </a>
+                  <TopNav />
+                  <div className="topbar-actions">
+                    <QuickActions />
+                    <UserBar />
+                  </div>
                 </div>
               </header>
-              <TopNav />
-              {children}
-            </main>
+              <main className="app-main">
+                {children}
+              </main>
+            </div>
           </ToastProvider>
         </AuthProvider>
       </body>

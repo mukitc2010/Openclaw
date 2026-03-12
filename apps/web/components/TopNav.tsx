@@ -17,12 +17,12 @@ export function TopNav() {
   ];
 
   return (
-    <nav className="top-nav" aria-label="Primary">
+    <nav className="topbar-nav" aria-label="Primary">
       {items.map((item) => (
         <Link
           key={item.href}
           href={item.href}
-          className={`top-nav-link ${isActive(pathname, item.href) ? "active" : ""}`}
+          className={`topbar-nav-link ${isActive(pathname, item.href) ? "active" : ""}`}
         >
           {item.label}
         </Link>

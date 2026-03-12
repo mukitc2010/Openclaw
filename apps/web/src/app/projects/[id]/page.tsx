@@ -236,14 +236,12 @@ export default function ProjectDetailPage() {
       </section>
 
       <div className="reveal delay-2">
-        <AssignmentMatrix assignments={project.assignments} />
+        <AssignmentMatrix assignments={project.assignments} tasks={project.tasks} />
       </div>
 
-      {project.deliverables && (
-        <div className="reveal delay-3">
-          <DeliverablesPanel deliverables={project.deliverables} />
-        </div>
-      )}
+      <div className="reveal delay-3">
+        <DeliverablesPanel deliverables={project.deliverables} />
+      </div>
 
       <section id="timeline" className="card reveal delay-3">
         <h3 className="section-title">Status Timeline</h3>
