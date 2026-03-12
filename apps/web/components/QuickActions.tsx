@@ -116,12 +116,15 @@ export function QuickActions() {
     if (!open) setQuery("");
   }, [open]);
 
+  const [shortcutHint, setShortcutHint] = useState("Ctrl+K");
+  useEffect(() => {
+    setShortcutHint(isMac() ? "Cmd+K" : "Ctrl+K");
+  }, []);
+
   function execute(action: Action) {
     action.run();
     setOpen(false);
   }
-
-  const shortcutHint = isMac() ? "Cmd+K" : "Ctrl+K";
 
   return (
     <>
