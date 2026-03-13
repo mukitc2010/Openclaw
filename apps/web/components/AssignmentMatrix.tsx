@@ -15,6 +15,22 @@ const ROLE_ICONS: Record<string, string> = {
   design: "✏️",
 };
 
+const DEFAULT_ROLES = [
+  "Project Manager Agent",
+  "Business Analyst Agent",
+  "Solution Architect Agent",
+  "AI Engineering Agent",
+  "UI/UX Designer Agent",
+  "Frontend Developer Agent",
+  "Backend Developer Agent",
+  "Database Engineer Agent",
+  "DevOps Agent",
+  "QA/Test Agent",
+  "Security Agent",
+  "Code Review Agent",
+  "GitHub Agent",
+];
+
 function getIcon(name: string): string {
   const lower = name.toLowerCase();
   for (const [key, icon] of Object.entries(ROLE_ICONS)) {
@@ -36,10 +52,19 @@ export function AssignmentMatrix({
     return (
       <section className="card">
         <h3 className="section-title">Agent Roles</h3>
-        <div className="empty-state compact">
-          <div className="empty-mark" aria-hidden="true" />
-          <h4>No agents assigned yet</h4>
-          <p className="state-text">Run generation to assign agents to tasks.</p>
+        <p className="section-meta">13 default roles ready · run generation to assign activity</p>
+        <div className="agent-roles-grid">
+          {DEFAULT_ROLES.map((role) => (
+            <div key={role} className="agent-role-card">
+              <div className="agent-role-header">
+                <span className="agent-icon">{getIcon(role)}</span>
+                <div className="agent-role-info">
+                  <strong className="agent-name">{role}</strong>
+                  <span className="agent-task-count">Awaiting assignment</span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     );
