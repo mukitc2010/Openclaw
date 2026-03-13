@@ -170,6 +170,22 @@ def update_task_status(project_id: str, task_id: str, payload: TaskStatusUpdate)
     return project
 
 
+@router.post("/{project_id}/stories/{story_id}/start", response_model=ProjectRecord)
+def start_story(project_id: str, story_id: str) -> ProjectRecord:
+    project = _get_project(project_id)
+    updated = False
+    for task in project.tasks:
+        if task.story_id == story_id and task.status == TaskStatus.backlog:
+            task.status = TaskStatus.in_progress
+            updated = True
+
+    if not updated:
+        raise HTTPException(status_code=404, detail="Story not found or no backlog tasks")
+
+    _with_status(project_id, f"story_{story_id.lower()}_started", 75)
+    return project
+
+
 @router.get("/{project_id}/status", response_model=StatusTimeline)
 def get_project_status(project_id: str) -> StatusTimeline:
     if project_id not in store.projects:

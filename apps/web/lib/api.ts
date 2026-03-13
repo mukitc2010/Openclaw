@@ -94,3 +94,9 @@ export async function updateTaskStatus(projectId: string, taskId: string, status
 export async function getProjectStatus(projectId: string): Promise<StatusTimeline> {
   return handle<StatusTimeline>(await apiFetch(`${API_BASE}/projects/${projectId}/status`, { cache: "no-store" } as RequestInit));
 }
+
+export async function startStory(projectId: string, storyId: string): Promise<ProjectRecord> {
+  return handle<ProjectRecord>(
+    await apiFetch(`${API_BASE}/projects/${projectId}/stories/${storyId}/start`, { method: "POST" }),
+  );
+}

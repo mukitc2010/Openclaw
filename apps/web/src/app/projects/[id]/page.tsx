@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 
+import { AgileBoard } from "@/components/AgileBoard";
 import { AssignmentMatrix } from "@/components/AssignmentMatrix";
 import { DeliverablesPanel } from "@/components/DeliverablesPanel";
-import { TaskBoard } from "@/components/TaskBoard";
 import { useToast } from "@/components/ToastProvider";
 import {
   generateAIEngineering,
@@ -16,6 +16,7 @@ import {
   generateProject,
   getProject,
   getProjectStatus,
+  startStory,
   updateTaskStatus,
 } from "@/lib/api";
 import { ProjectRecord, StatusTimeline, TaskStatus } from "@/types";
@@ -30,6 +31,10 @@ export default function ProjectDetailPage() {
   const [running, setRunning] = useState(false);
   const [moduleRunning, setModuleRunning] = useState<string>("");
   const [error, setError] = useState("");
+  const [pmDirective, setPmDirective] = useState("");
+  const [pmLog, setPmLog] = useState<{ text: string; ts: string }[]>([]);
+  const [sendingDirective, setSendingDirective] = useState(false);
+  const pmLogRef = useRef<HTMLDivElement>(null);
 
   async function load() {
     if (!projectId) {
@@ -124,6 +129,33 @@ export default function ProjectDetailPage() {
       setError(err instanceof Error ? err.message : "Failed to update task status");
       toast({ type: "error", message: "Failed to update task status." });
     }
+  }
+
+  async function onStartStory(storyId: string) {
+    if (!projectId) return;
+    try {
+      const updated = await startStory(projectId, storyId);
+      setProject(updated);
+      const statusFeed = await getProjectStatus(projectId);
+      setTimeline(statusFeed);
+      toast({ type: "success", message: `Story ${storyId} is now in progress.` });
+    } catch (err) {
+      toast({ type: "error", message: `Could not start story ${storyId}.` });
+    }
+  }
+
+  function sendPmDirective() {
+    if (!pmDirective.trim()) return;
+    setSendingDirective(true);
+    const entry = { text: pmDirective.trim(), ts: new Date().toLocaleTimeString() };
+    setPmLog((prev) => [...prev, entry]);
+    setPmDirective("");
+    setTimeout(() => {
+      setSendingDirective(false);
+      if (pmLogRef.current) {
+        pmLogRef.current.scrollTop = pmLogRef.current.scrollHeight;
+      }
+    }, 600);
   }
 
   if (loading) {
@@ -231,8 +263,49 @@ export default function ProjectDetailPage() {
       </section>
 
       <section id="sprint" className="card reveal delay-2">
-        <h3 className="section-title">Sprint Board (Sprint 1)</h3>
-        <TaskBoard tasks={project.tasks} onStatusChange={onTaskStatusChange} disabled={moduleRunning.length > 0} />
+        <h3 className="section-title">Agile Board</h3>
+        <AgileBoard
+          epics={project.epics}
+          tasks={project.tasks}
+          assignments={project.assignments}
+          onStatusChange={onTaskStatusChange}
+          onStartStory={onStartStory}
+          disabled={moduleRunning.length > 0}
+        />
+      </section>
+
+      {/* PM Directive Panel */}
+      <section className="card pm-directive-panel reveal delay-2">
+        <h3 className="section-title">PM Directive</h3>
+        <p className="state-text">Send a new instruction to all agents. Directives are logged below so agents can reference them.</p>
+        <div className="pm-directive-input-row">
+          <textarea
+            className="pm-directive-textarea"
+            placeholder="E.g. Focus sprint 2 on auth and dashboard. Postpone analytics module."
+            value={pmDirective}
+            onChange={(e) => setPmDirective(e.target.value)}
+            rows={3}
+            onKeyDown={(e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) sendPmDirective(); }}
+          />
+          <button
+            className="pm-directive-send-btn"
+            onClick={sendPmDirective}
+            disabled={!pmDirective.trim() || sendingDirective}
+          >
+            {sendingDirective ? "Sending..." : "Send to Agents"}
+          </button>
+        </div>
+        {pmLog.length > 0 && (
+          <div className="pm-directive-log" ref={pmLogRef}>
+            {pmLog.map((entry, i) => (
+              <div key={i} className="pm-directive-entry">
+                <span className="pm-directive-badge">PM</span>
+                <p className="pm-directive-text">{entry.text}</p>
+                <span className="pm-directive-ts">{entry.ts}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       <div className="reveal delay-2">
