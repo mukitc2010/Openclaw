@@ -126,6 +126,27 @@ const LAUNCH_PATHS = [
 
 const TRUST_SIGNALS = ["Built for founders and agencies", "No-code brief to execution board", "Works with real Agile workflows"];
 
+const PROOF_METRICS = [
+  { value: "13", label: "specialist agents orchestrated in one flow" },
+  { value: "6", label: "delivery modules across PM, Agile, architecture, AI, QA, and GitHub" },
+  { value: "1", label: "shared control room for planning, execution, and quality gates" },
+];
+
+const ENTERPRISE_PILLARS = [
+  {
+    title: "Enterprise governance",
+    desc: "Role clarity, artifact traceability, and delivery checkpoints designed for larger teams and executive oversight.",
+  },
+  {
+    title: "Security-minded architecture",
+    desc: "Service boundaries, deployment workflows, and QA outputs that support formal review, risk reduction, and release discipline.",
+  },
+  {
+    title: "Decision-ready outputs",
+    desc: "Project plans, sprint tasks, architecture notes, and GitHub strategy generated in formats stakeholders can act on immediately.",
+  },
+];
+
 const IMPACT_POINTS = [
   {
     title: "Skip planning paralysis",
@@ -204,6 +225,33 @@ export default function HomePage() {
         {TRUST_SIGNALS.map((signal) => (
           <span key={signal} className="trust-chip">{signal}</span>
         ))}
+      </section>
+
+      <section className="enterprise-proof-section reveal delay-1">
+        <div className="enterprise-proof-copy">
+          <p className="section-label">Enterprise Readiness</p>
+          <h2 className="section-h2">Built to earn trust from larger engineering organizations</h2>
+          <p className="section-sub">
+            robolog.us is positioned as more than a planning toy. It is structured to support governed delivery,
+            visible ownership, and decision-ready outputs that teams can use in real operating environments.
+          </p>
+        </div>
+        <div className="enterprise-proof-metrics" aria-label="Enterprise proof points">
+          {PROOF_METRICS.map((metric) => (
+            <article key={metric.label} className="enterprise-proof-stat">
+              <strong>{metric.value}</strong>
+              <span>{metric.label}</span>
+            </article>
+          ))}
+        </div>
+        <div className="enterprise-proof-grid">
+          {ENTERPRISE_PILLARS.map((pillar) => (
+            <article key={pillar.title} className="enterprise-proof-card">
+              <h4>{pillar.title}</h4>
+              <p>{pillar.desc}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="impact-section reveal delay-1">
