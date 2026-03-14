@@ -13,28 +13,115 @@ const HOW_IT_WORKS = [
     icon: "💡",
     title: "Describe your idea",
     desc: "Share title, summary, goals, and constraints. Even a rough brief works.",
+    details: [
+      "Capture the problem, target user, and desired outcome in plain language.",
+      "Add constraints like budget, timeline, integrations, and team size.",
+      "Clarify success criteria so every generated plan aligns to your goals.",
+    ],
   },
   {
     step: "02",
     icon: "⚡",
     title: "Generate plans with agents",
     desc: "OpenClaw coordinates 13 agents to produce PM, Agile, architecture, and delivery artifacts.",
+    details: [
+      "Get PM scope, milestones, and roadmap decisions in one coordinated pass.",
+      "Receive Agile-ready epics, stories, priorities, and sprint task breakdowns.",
+      "Produce architecture, AI integration, and GitHub workflow handoff documents.",
+    ],
   },
   {
     step: "03",
     icon: "🚢",
     title: "Track and ship",
     desc: "Move tasks across the sprint board and monitor progress from one control room.",
+    details: [
+      "Use one board to track ownership, status, and blockers across the team.",
+      "Review progress snapshots to keep stakeholders aligned each sprint.",
+      "Ship with confidence using clear handoffs from planning to execution.",
+    ],
   },
 ];
 
 const FEATURES = [
-  { icon: "🗺️", title: "PM Outline", desc: "Scope, milestones, roadmap, and definition of done in seconds." },
-  { icon: "📌", title: "Agile Plan", desc: "Epics, stories, priorities, and sprint-ready tasks." },
-  { icon: "🧠", title: "Architecture", desc: "Clear technical structure and module boundaries." },
-  { icon: "🤖", title: "AI Engineering", desc: "AI integration plan with practical implementation details." },
-  { icon: "📦", title: "GitHub Strategy", desc: "PR process, labels, branch policy, and release flow." },
-  { icon: "📈", title: "Live Progress", desc: "Status timeline and progress updates as work moves." },
+  {
+    icon: "🗺️",
+    title: "PM Outline",
+    desc: "Scope, milestones, roadmap, and definition of done in seconds.",
+    details: [
+      "Auto-generated project charter with measurable outcomes.",
+      "Milestone sequencing with dependencies and timeline checkpoints.",
+      "Definition-of-done criteria aligned to product and delivery goals.",
+    ],
+  },
+  {
+    icon: "📌",
+    title: "Agile Plan",
+    desc: "Epics, stories, priorities, and sprint-ready tasks.",
+    details: [
+      "Backlog organized by value, risk, and implementation effort.",
+      "User stories with acceptance criteria and owner-ready task cuts.",
+      "Sprint slices that help teams start execution immediately.",
+    ],
+  },
+  {
+    icon: "🧠",
+    title: "Architecture",
+    desc: "Clear technical structure and module boundaries.",
+    details: [
+      "System layers mapped for frontend, backend, data, and integrations.",
+      "Module boundaries that reduce coupling and simplify ownership.",
+      "Scalable baseline decisions for security, reliability, and growth.",
+    ],
+  },
+  {
+    icon: "🤖",
+    title: "AI Engineering",
+    desc: "AI integration plan with practical implementation details.",
+    details: [
+      "Model and provider selection guidance based on use case needs.",
+      "Prompt, eval, and fallback strategy for production-safe behavior.",
+      "Operational guardrails for latency, quality, and cost controls.",
+    ],
+  },
+  {
+    icon: "📦",
+    title: "GitHub Strategy",
+    desc: "PR process, labels, branch policy, and release flow.",
+    details: [
+      "Branch model and review gates for clean team collaboration.",
+      "Label taxonomy for priority, scope, and release tracking.",
+      "Release workflow from merge to deploy with rollback readiness.",
+    ],
+  },
+  {
+    icon: "📈",
+    title: "Live Progress",
+    desc: "Status timeline and progress updates as work moves.",
+    details: [
+      "Shared timeline view for project health and sprint momentum.",
+      "Clear status transitions from planned to in-progress to shipped.",
+      "Board-level visibility into blockers and delivery throughput.",
+    ],
+  },
+];
+
+const LAUNCH_PATHS = [
+  {
+    title: "Founder Sprint",
+    desc: "Start with a short prompt and leave with a client-ready project blueprint in one session.",
+    eta: "~15 min",
+  },
+  {
+    title: "Agency Delivery Pack",
+    desc: "Generate PM, Agile, architecture, and handoff docs to kick off paid delivery immediately.",
+    eta: "~30 min",
+  },
+  {
+    title: "Product Team Mode",
+    desc: "Align roles across planning, implementation, and quality with one shared execution board.",
+    eta: "~45 min",
+  },
 ];
 
 const TRUST_SIGNALS = ["Built for founders and agencies", "No-code brief to execution board", "Works with real Agile workflows"];
@@ -142,6 +229,11 @@ export default function HomePage() {
               <span className="hiw-icon">{item.icon}</span>
               <h4>{item.title}</h4>
               <p>{item.desc}</p>
+              <ul className="hiw-detail-list" aria-label={`${item.title} details`}>
+                {item.details.map((detail) => (
+                  <li key={detail}>{detail}</li>
+                ))}
+              </ul>
             </article>
           ))}
         </div>
@@ -185,6 +277,30 @@ export default function HomePage() {
               <span className="feature-icon">{feat.icon}</span>
               <h5>{feat.title}</h5>
               <p>{feat.desc}</p>
+              <ul className="feature-detail-list" aria-label={`${feat.title} details`}>
+                {feat.details.map((detail) => (
+                  <li key={detail}>{detail}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="launch-paths-section reveal delay-2">
+        <p className="section-label">Launch Paths</p>
+        <h2 className="section-h2">Choose how you want to move from idea to execution</h2>
+        <p className="section-sub">
+          Whether you are a solo founder or a full team, OpenClaw gives you a practical route to ship faster.
+        </p>
+        <div className="launch-paths-grid">
+          {LAUNCH_PATHS.map((path) => (
+            <article key={path.title} className="launch-path-card">
+              <div className="launch-path-head">
+                <h4>{path.title}</h4>
+                <span className="launch-path-eta">{path.eta}</span>
+              </div>
+              <p>{path.desc}</p>
             </article>
           ))}
         </div>
