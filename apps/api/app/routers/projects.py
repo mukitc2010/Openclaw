@@ -26,6 +26,7 @@ from app.services.planning import (
     generate_github_strategy_doc,
     generate_outline,
     generate_project_plan_doc,
+    generate_qa_test_report_doc,
     initial_status,
     new_project_id,
     next_status,
@@ -145,6 +146,15 @@ def generate_github_module(project_id: str) -> ProjectRecord:
     _with_status(project_id, "github_strategy_generated", 95)
     if project.outline and project.epics and project.tasks:
         _with_status(project_id, "deliverables_generated", 100)
+    return project
+
+
+@router.post("/{project_id}/generate/testing", response_model=ProjectRecord)
+def generate_testing_module(project_id: str) -> ProjectRecord:
+    project = _get_project(project_id)
+    deliverables = _ensure_deliverables(project)
+    deliverables.qa_test_report = generate_qa_test_report_doc(project.intake, project.epics, project.tasks)
+    _with_status(project_id, "qa_testing_generated", 92)
     return project
 
 

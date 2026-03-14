@@ -46,6 +46,13 @@ const MODULES = [
     desc: "CI/CD, branching strategy, and delivery pipeline",
     module: "GitHub Delivery",
   },
+  {
+    key: "qa_test_report" as const,
+    label: "QA_TEST_REPORT.md",
+    icon: "🧪",
+    desc: "Automated testing scope, bug-fix plan, and release checks",
+    module: "QA/Test Agent",
+  },
 ];
 
 export function DeliverablesPanel({

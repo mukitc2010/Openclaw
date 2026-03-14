@@ -82,6 +82,10 @@ export async function generateGithub(projectId: string): Promise<ProjectRecord> 
   return generateModule(projectId, "github");
 }
 
+export async function generateTesting(projectId: string): Promise<ProjectRecord> {
+  return generateModule(projectId, "testing");
+}
+
 export async function updateTaskStatus(projectId: string, taskId: string, status: TaskStatus): Promise<ProjectRecord> {
   return handle<ProjectRecord>(
     await apiFetch(`${API_BASE}/projects/${projectId}/tasks/${taskId}`, {

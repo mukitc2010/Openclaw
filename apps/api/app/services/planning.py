@@ -209,6 +209,26 @@ def _github_user(intake: ProjectCreate) -> str:
     )
 
 
+_QA_TEST_SYSTEM = (
+    f"You are a senior QA/Test automation lead. Generate a concise test and bug-fix execution report for engineering teams. {_DOC_RULES}"
+)
+
+
+def _qa_test_user(intake: ProjectCreate, epics: List[Epic], tasks: List[Task]) -> str:
+    epic_lines = "\n".join(f"- {e.id}: {e.title}" for e in epics) or "- No epics generated yet"
+    task_lines = "\n".join(f"- {t.id}: {t.title} [{t.status}]" for t in tasks) or "- No tasks generated yet"
+    return (
+        f"Project: {intake.title}\n"
+        f"Summary: {intake.summary}\n"
+        f"Priority: {intake.priority}\n"
+        f"Goals: {json.dumps(intake.goals)}\n\n"
+        f"Epics:\n{epic_lines}\n\n"
+        f"Current tasks:\n{task_lines}\n\n"
+        "Write # QA_TEST_REPORT with sections: Test Scope, Automated Test Matrix, "
+        "Known Bugs, Proposed Fix Plan, Regression Checklist, and Release Exit Criteria."
+    )
+
+
 # ── LLM output parsers ───────────────────────────────────────────────────────
 
 def _parse_outline(data: dict) -> ProjectOutline:
@@ -499,6 +519,41 @@ def generate_github_strategy_doc(intake: ProjectCreate) -> str:
     )
 
 
+def generate_qa_test_report_doc(intake: ProjectCreate, epics: List[Epic], tasks: List[Task]) -> str:
+    result = complete_text(_QA_TEST_SYSTEM, _qa_test_user(intake, epics, tasks))
+    if result:
+        return result
+
+    task_count = len(tasks)
+    blocked = sum(1 for t in tasks if t.status == TaskStatus.blocked)
+    return (
+        "# QA_TEST_REPORT\n\n"
+        "## Test Scope\n"
+        f"- Validate sprint deliverables for {intake.title}.\n"
+        f"- Total planned tasks under test: {task_count}.\n"
+        f"- Blocked tasks requiring triage: {blocked}.\n\n"
+        "## Automated Test Matrix\n"
+        "- API smoke tests for health, project create/list/get, and module generation endpoints.\n"
+        "- UI smoke tests for project intake, generation actions, and deliverables rendering.\n"
+        "- Contract tests to ensure payload compatibility between web and API models.\n\n"
+        "## Known Bugs\n"
+        "- Investigate intermittent Next.js dev runtime chunk mismatch during long HMR sessions.\n"
+        "- Verify local cache reset path when switching between dev and build modes.\n\n"
+        "## Proposed Fix Plan\n"
+        "- Add deterministic preflight checks before local dev startup.\n"
+        "- Add regression tests around generation modules and timeline events.\n"
+        "- Gate releases on successful full-build pipeline and API health checks.\n\n"
+        "## Regression Checklist\n"
+        "- [ ] Run full build pipeline for API, MCP, and web.\n"
+        "- [ ] Validate project creation and module generation in UI.\n"
+        "- [ ] Verify task status transitions and timeline updates.\n\n"
+        "## Release Exit Criteria\n"
+        "- No blocking defects in core generation flows.\n"
+        "- All smoke and regression checks pass in CI.\n"
+        "- Deployment workflows succeed for web and API services.\n"
+    )
+
+
 def generate_deliverables(intake: ProjectCreate, epics: List[Epic], tasks: List[Task]) -> DeliverableBundle:
     return DeliverableBundle(
         project_plan=generate_project_plan_doc(intake),
@@ -507,6 +562,7 @@ def generate_deliverables(intake: ProjectCreate, epics: List[Epic], tasks: List[
         ai_engineering_plan=generate_ai_engineering_doc(intake),
         agents=generate_agents_doc(intake),
         github_strategy=generate_github_strategy_doc(intake),
+        qa_test_report=generate_qa_test_report_doc(intake, epics, tasks),
     )
 
 

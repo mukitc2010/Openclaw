@@ -14,6 +14,7 @@ import {
   generateGithub,
   generateOutline,
   generateProject,
+  generateTesting,
   getProject,
   getProjectStatus,
   startStory,
@@ -93,6 +94,9 @@ export default function ProjectDetailPage() {
       }
       if (action === "run_architecture") {
         void runModule("architecture", () => generateArchitecture(projectId));
+      }
+      if (action === "run_testing") {
+        void runModule("testing", () => generateTesting(projectId));
       }
     };
 
@@ -255,6 +259,13 @@ export default function ProjectDetailPage() {
             disabled={moduleRunning.length > 0}
           >
             {moduleRunning === "github" ? "Running GitHub..." : "Run GitHub Delivery"}
+          </button>
+          <button
+            className="secondary"
+            onClick={() => runModule("testing", () => generateTesting(projectId))}
+            disabled={moduleRunning.length > 0}
+          >
+            {moduleRunning === "testing" ? "Running Testing..." : "Run QA Testing"}
           </button>
         </div>
         {error && <p className="state-text danger">{error}</p>}

@@ -89,6 +89,7 @@ class DeliverableBundle(BaseModel):
     ai_engineering_plan: str
     agents: str
     github_strategy: str
+    qa_test_report: str
 
 
 class ProjectRecord(BaseModel):

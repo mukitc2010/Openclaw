@@ -69,6 +69,13 @@ export function QuickActions() {
           },
         },
         {
+          id: "run_testing",
+          label: "Run QA Testing Module",
+          run: () => {
+            window.dispatchEvent(new CustomEvent("openclaw:quick-action", { detail: { action: "run_testing" } }));
+          },
+        },
+        {
           id: "jump_outline",
           label: "Jump to Project Outline",
           run: () => {

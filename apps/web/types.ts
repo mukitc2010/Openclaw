@@ -68,6 +68,7 @@ export type DeliverableBundle = {
   ai_engineering_plan: string;
   agents: string;
   github_strategy: string;
+  qa_test_report: string;
 };
 
 export type ProjectRecord = {

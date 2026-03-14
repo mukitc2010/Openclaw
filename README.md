@@ -147,6 +147,7 @@ NEXT_PUBLIC_API_REDOC_URL=https://api.robolog.us/redoc
 - `POST /projects/{project_id}/generate/architecture`: run architecture module
 - `POST /projects/{project_id}/generate/ai-engineering`: run AI engineering module
 - `POST /projects/{project_id}/generate/github`: run GitHub delivery module
+- `POST /projects/{project_id}/generate/testing`: run QA testing and bug-fix planning module
 - `PATCH /projects/{project_id}/tasks/{task_id}`: update task status
 - `POST /projects/{project_id}/stories/{story_id}/start`: start a story (moves backlog tasks to in progress)
 - `GET /projects/{project_id}/status`: status timeline
