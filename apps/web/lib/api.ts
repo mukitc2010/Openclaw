@@ -1,7 +1,8 @@
 import { ProjectCreate, ProjectListResponse, ProjectRecord, StatusTimeline, TaskStatus } from "@/types";
 import { supabase } from "@/lib/supabase";
+import { getApiBaseUrl } from "@/lib/runtime-config";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+const API_BASE = getApiBaseUrl();
 
 async function handle<T>(resp: Response): Promise<T> {
   if (!resp.ok) {

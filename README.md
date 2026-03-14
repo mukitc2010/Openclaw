@@ -42,7 +42,7 @@ docker compose up
 
 Web: http://localhost:3000
 
-API: http://localhost:8000
+API: http://localhost:8010
 
 ### Option B: Manual
 
@@ -61,10 +61,10 @@ Frontend:
 ```bash
 cd apps/web
 npm install
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8000 npm run dev
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8010 npm run dev
 ```
 
-Production docs URL setup:
+Production URL setup:
 
 ```bash
 NEXT_PUBLIC_API_BASE_URL=https://api.openclaw.ai

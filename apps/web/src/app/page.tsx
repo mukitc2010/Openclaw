@@ -52,6 +52,23 @@ const FEATURES = [
   { icon: "📈", title: "Live Progress", desc: "Status timeline and progress updates as work moves." },
 ];
 
+const TRUST_SIGNALS = ["Built for founders and agencies", "No-code brief to execution board", "Works with real Agile workflows"];
+
+const IMPACT_POINTS = [
+  {
+    title: "Skip planning paralysis",
+    desc: "Get a complete project direction in minutes instead of waiting for long discovery cycles.",
+  },
+  {
+    title: "Look professional instantly",
+    desc: "Share PM and architecture outputs with clients as polished, decision-ready artifacts.",
+  },
+  {
+    title: "Start delivery the same day",
+    desc: "Move from raw prompt to sprint tasks and ownership without setup overhead.",
+  },
+];
+
 export default function HomePage() {
   const [projects, setProjects] = useState<ProjectRecord[]>([]);
   const [loading, setLoading] = useState(true);
@@ -109,6 +126,25 @@ export default function HomePage() {
             <span className="stat-num amber">6</span>
             <span className="stat-label">Flow Modules</span>
           </div>
+        </div>
+      </section>
+
+      <section className="trust-strip reveal delay-1" aria-label="Trust and fit">
+        {TRUST_SIGNALS.map((signal) => (
+          <span key={signal} className="trust-chip">{signal}</span>
+        ))}
+      </section>
+
+      <section className="impact-section reveal delay-1">
+        <p className="section-label">Why Teams Choose OpenClaw</p>
+        <h2 className="section-h2">Turn ideas into delivery-ready momentum</h2>
+        <div className="impact-grid">
+          {IMPACT_POINTS.map((point) => (
+            <article key={point.title} className="impact-card">
+              <h4>{point.title}</h4>
+              <p>{point.desc}</p>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -207,6 +243,20 @@ export default function HomePage() {
               </article>
             );
           })}
+        </div>
+      </section>
+
+      <section className="final-cta reveal delay-2">
+        <div className="final-cta-copy">
+          <p className="section-label">Ready To Start</p>
+          <h2>Bring your next project brief and ship faster</h2>
+          <p>Start with one prompt, get a plan your team can execute today.</p>
+        </div>
+        <div className="final-cta-actions">
+          <Link href="/projects/new">
+            <button className="btn-hero">Create New Project</button>
+          </Link>
+          <Link href="/docs" className="inline-link">Explore API Docs</Link>
         </div>
       </section>
     </div>
