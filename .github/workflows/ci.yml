@@ -22,6 +22,22 @@ jobs:
           cd apps/api
           python -c "from app.main import app; print(app.title)"
 
+  mcp-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install mcp dependencies
+        run: |
+          cd apps/mcp-server
+          npm ci
+      - name: Build mcp server
+        run: |
+          cd apps/mcp-server
+          npm run build
+
   web-check:
     runs-on: ubuntu-latest
     steps:

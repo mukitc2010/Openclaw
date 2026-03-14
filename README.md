@@ -33,6 +33,18 @@ infra/        Docker Compose local runtime
 
 ## Run Locally
 
+### Build Everything (No Prompts)
+
+```bash
+./scripts/build-all.sh
+```
+
+This command installs dependencies and runs build checks for:
+
+- `apps/api`
+- `apps/mcp-server`
+- `apps/web`
+
 ### Option A: Docker Compose
 
 ```bash
@@ -67,9 +79,9 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:8010 npm run dev
 Production URL setup:
 
 ```bash
-NEXT_PUBLIC_API_BASE_URL=https://api.openclaw.ai
-NEXT_PUBLIC_API_DOCS_URL=https://api.openclaw.ai/docs
-NEXT_PUBLIC_API_REDOC_URL=https://api.openclaw.ai/redoc
+NEXT_PUBLIC_API_BASE_URL=https://api.robolog.us
+NEXT_PUBLIC_API_DOCS_URL=https://api.robolog.us/docs
+NEXT_PUBLIC_API_REDOC_URL=https://api.robolog.us/redoc
 ```
 
 ## Core API Endpoints
