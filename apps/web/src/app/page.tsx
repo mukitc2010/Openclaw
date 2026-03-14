@@ -365,7 +365,7 @@ export default function HomePage() {
           </Link>
         </div>
         {loading && <p className="state-text">Loading projects...</p>}
-        {error && <p className="state-text danger">{error} - make sure the API server is running.</p>}
+        {error && <p className="state-text danger">{error}</p>}
         {!loading && !error && !projects.length && (
           <div className="empty-state">
             <div className="empty-mark" aria-hidden="true" />

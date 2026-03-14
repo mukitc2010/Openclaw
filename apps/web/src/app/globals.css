@@ -67,6 +67,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
 body {
@@ -78,6 +79,7 @@ body {
   font-family: var(--font-body), "IBM Plex Sans", "Avenir Next", "Segoe UI", sans-serif;
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: clip;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -95,6 +97,7 @@ ul, ol { padding-left: 1.25em; }
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow-x: clip;
 }
 
 /* ── Sticky Top Bar ─────────────────────────────────────────────── */
@@ -275,6 +278,8 @@ main::before {
 .state-text {
   color: var(--muted);
   font-size: 14px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .state-text.danger {

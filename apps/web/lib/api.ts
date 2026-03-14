@@ -3,10 +3,26 @@ import { getApiBaseUrl } from "@/lib/runtime-config";
 
 const API_BASE = getApiBaseUrl();
 
-async function handle<T>(resp: Response): Promise<T> {
+function formatApiError(resp: Response, body: string, endpointLabel: string): string {
+  const contentType = resp.headers.get("content-type")?.toLowerCase() ?? "";
+
+  if (contentType.includes("text/html")) {
+    return `API ${resp.status}: received HTML from ${endpointLabel}. Check NEXT_PUBLIC_API_BASE_URL.`;
+  }
+
+  const normalized = body.replace(/\s+/g, " ").trim();
+  if (!normalized) {
+    return `API ${resp.status}: request failed for ${endpointLabel}.`;
+  }
+
+  const trimmed = normalized.length > 220 ? `${normalized.slice(0, 220)}...` : normalized;
+  return `API ${resp.status}: ${trimmed}`;
+}
+
+async function handle<T>(resp: Response, endpointLabel: string): Promise<T> {
   if (!resp.ok) {
     const body = await resp.text();
-    throw new Error(`API ${resp.status}: ${body}`);
+    throw new Error(formatApiError(resp, body, endpointLabel));
   }
   return (await resp.json()) as T;
 }
@@ -34,32 +50,40 @@ async function apiFetch(url: string, init: RequestInit = {}): Promise<Response> 
 }
 
 export async function listProjects(): Promise<ProjectListResponse> {
-  return handle<ProjectListResponse>(await apiFetch(`${API_BASE}/projects`, { cache: "no-store" } as RequestInit));
+  const endpoint = `${API_BASE}/projects`;
+  return handle<ProjectListResponse>(await apiFetch(endpoint, { cache: "no-store" } as RequestInit), endpoint);
 }
 
 export async function createProject(payload: ProjectCreate): Promise<ProjectRecord> {
+  const endpoint = `${API_BASE}/projects`;
   return handle<ProjectRecord>(
-    await apiFetch(`${API_BASE}/projects`, {
+    await apiFetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     }),
+    endpoint,
   );
 }
 
 export async function getProject(projectId: string): Promise<ProjectRecord> {
-  return handle<ProjectRecord>(await apiFetch(`${API_BASE}/projects/${projectId}`, { cache: "no-store" } as RequestInit));
+  const endpoint = `${API_BASE}/projects/${projectId}`;
+  return handle<ProjectRecord>(await apiFetch(endpoint, { cache: "no-store" } as RequestInit), endpoint);
 }
 
 export async function generateProject(projectId: string): Promise<ProjectRecord> {
+  const endpoint = `${API_BASE}/projects/${projectId}/generate`;
   return handle<ProjectRecord>(
-    await apiFetch(`${API_BASE}/projects/${projectId}/generate`, { method: "POST" }),
+    await apiFetch(endpoint, { method: "POST" }),
+    endpoint,
   );
 }
 
 async function generateModule(projectId: string, moduleName: string): Promise<ProjectRecord> {
+  const endpoint = `${API_BASE}/projects/${projectId}/generate/${moduleName}`;
   return handle<ProjectRecord>(
-    await apiFetch(`${API_BASE}/projects/${projectId}/generate/${moduleName}`, { method: "POST" }),
+    await apiFetch(endpoint, { method: "POST" }),
+    endpoint,
   );
 }
 
@@ -88,21 +112,26 @@ export async function generateTesting(projectId: string): Promise<ProjectRecord>
 }
 
 export async function updateTaskStatus(projectId: string, taskId: string, status: TaskStatus): Promise<ProjectRecord> {
+  const endpoint = `${API_BASE}/projects/${projectId}/tasks/${taskId}`;
   return handle<ProjectRecord>(
-    await apiFetch(`${API_BASE}/projects/${projectId}/tasks/${taskId}`, {
+    await apiFetch(endpoint, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
     }),
+    endpoint,
   );
 }
 
 export async function getProjectStatus(projectId: string): Promise<StatusTimeline> {
-  return handle<StatusTimeline>(await apiFetch(`${API_BASE}/projects/${projectId}/status`, { cache: "no-store" } as RequestInit));
+  const endpoint = `${API_BASE}/projects/${projectId}/status`;
+  return handle<StatusTimeline>(await apiFetch(endpoint, { cache: "no-store" } as RequestInit), endpoint);
 }
 
 export async function startStory(projectId: string, storyId: string): Promise<ProjectRecord> {
+  const endpoint = `${API_BASE}/projects/${projectId}/stories/${storyId}/start`;
   return handle<ProjectRecord>(
-    await apiFetch(`${API_BASE}/projects/${projectId}/stories/${storyId}/start`, { method: "POST" }),
+    await apiFetch(endpoint, { method: "POST" }),
+    endpoint,
   );
 }
