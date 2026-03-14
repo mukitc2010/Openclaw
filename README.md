@@ -16,11 +16,55 @@ OpenClaw is an enterprise-style AI Software Delivery Platform. It accepts a proj
 ```
 apps/
 	api/        FastAPI backend
+	mcp-server/ MCP tools/orchestration service
 	web/        Next.js frontend dashboard
 docs/         Planning and delivery markdown outputs
 infra/        Docker Compose local runtime
 .github/      CI workflow
 ```
+
+## Microservice Architecture
+
+OpenClaw is structured as independent services with clear runtime boundaries:
+
+- `web` service: Next.js UI and client interactions
+- `api` service: FastAPI project and planning endpoints
+- `mcp-server` service (optional profile): MCP tool surface for agent workflows
+
+Service communication model:
+
+- Browser -> `web` on `:3000`
+- Browser -> `api` on `:8010` (via `NEXT_PUBLIC_API_BASE_URL`)
+- Agent tooling -> `mcp-server` (profile-enabled runtime)
+
+All services share an isolated Docker network (`openclaw-net`) for local orchestration.
+
+## AWS Deployment Architecture
+
+Service-by-service deployment is split across dedicated GitHub Actions workflows:
+
+- `deploy-aws.yml`: builds and deploys `web` to App Runner
+- `deploy-api-aws.yml`: builds and deploys `api` to App Runner
+- `publish-mcp-image.yml`: builds and publishes `mcp-server` image to ECR
+
+Recommended production routing:
+
+- `robolog.us` -> `web` service
+- `api.robolog.us` -> `api` service
+- `mcp` image consumed by internal runtime (ECS/Fargate worker or trusted MCP host)
+
+Required AWS repositories/services:
+
+- ECR: `openclaw-web`, `openclaw-api`, `openclaw-mcp-server`
+- App Runner services: `openclaw-web`, `openclaw-api`
+
+Required GitHub secrets:
+
+- `AWS_DEPLOY_ROLE_ARN`
+- `APP_RUNNER_ECR_ROLE_ARN`
+- `NEXT_PUBLIC_API_BASE_URL`
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 ## Tech Stack
 
@@ -50,6 +94,13 @@ This command installs dependencies and runs build checks for:
 ```bash
 cd infra
 docker compose up
+```
+
+Run with MCP service enabled:
+
+```bash
+cd infra
+docker compose --profile mcp up
 ```
 
 Web: http://localhost:3000

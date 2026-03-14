@@ -22,8 +22,8 @@ const bodyFont = IBM_Plex_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL("https://robolog.us"),
   title: {
-    default: "OpenClaw | AI Software Delivery Platform",
-    template: "%s | OpenClaw",
+    default: "robolog.us | AI Software Delivery Platform",
+    template: "%s | robolog.us",
   },
   description: "Multi-agent planning from idea to Agile and GitHub delivery.",
   keywords: [
@@ -34,15 +34,15 @@ export const metadata: Metadata = {
     "developer workflow",
   ],
   openGraph: {
-    title: "OpenClaw | AI Software Delivery Platform",
+    title: "robolog.us | AI Software Delivery Platform",
     description: "Generate PM, Agile, architecture, and GitHub delivery plans in one control room.",
     type: "website",
     url: "https://robolog.us",
-    siteName: "OpenClaw",
+    siteName: "robolog.us",
   },
   twitter: {
     card: "summary_large_image",
-    title: "OpenClaw | AI Software Delivery Platform",
+    title: "robolog.us | AI Software Delivery Platform",
     description: "Generate PM, Agile, architecture, and GitHub delivery plans in one control room.",
   },
 };
@@ -57,8 +57,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <header className="app-topbar">
                 <div className="topbar-inner">
                   <a href="/" className="topbar-brand">
-                    <span className="brand-mark">OC</span>
-                    <span className="brand-name">OpenClaw</span>
+                    <span className="brand-mark">RB</span>
+                    <span className="brand-name">robolog.us</span>
                   </a>
                   <TopNav />
                   <div className="topbar-actions">

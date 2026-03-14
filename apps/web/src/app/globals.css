@@ -2883,7 +2883,12 @@ a:focus-visible,
   main { padding: 20px 16px 56px; }
 
   .topbar-inner { padding: 0 16px; }
-  .brand-name   { display: none; }
+  .brand-name {
+    display: inline;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
 
   .hero,
   .stat-bar,

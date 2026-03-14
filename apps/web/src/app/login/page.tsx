@@ -47,7 +47,7 @@ export default function LoginPage() {
     <div className="login-layout page-enter">
       <section className="card login-card reveal">
         <p className="eyebrow">Authentication</p>
-        <h2 className="section-title">Sign in to OpenClaw</h2>
+        <h2 className="section-title">Sign in to robolog.us</h2>
         <p className="state-text">Use your Supabase credentials to access your projects and generation workflows.</p>
 
         <form onSubmit={handleSubmit} className="login-form">

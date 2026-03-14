@@ -23,7 +23,7 @@ const HOW_IT_WORKS = [
     step: "02",
     icon: "⚡",
     title: "Generate plans with agents",
-    desc: "OpenClaw coordinates 13 agents to produce PM, Agile, architecture, and delivery artifacts.",
+    desc: "robolog.us coordinates 13 agents to produce PM, Agile, architecture, and delivery artifacts.",
     details: [
       "Get PM scope, milestones, and roadmap decisions in one coordinated pass.",
       "Receive Agile-ready epics, stories, priorities, and sprint task breakdowns.",
@@ -158,7 +158,7 @@ export default function HomePage() {
   return (
     <div className="home-layout page-enter">
       <section className="hero-banner reveal">
-        <div className="hero-badge">AI-Powered Software Delivery</div>
+        <div className="hero-badge">robolog.us • AI-Powered Software Delivery</div>
         <h1 className="hero-headline">
           From idea to
           <br />
@@ -167,7 +167,7 @@ export default function HomePage() {
           in seconds
         </h1>
         <p className="hero-subline">
-          OpenClaw coordinates 13 specialized AI agents to generate PM outlines, Agile epics,
+          robolog.us coordinates 13 specialized AI agents to generate PM outlines, Agile epics,
           architecture docs, and GitHub delivery strategy from one brief.
         </p>
         <div className="hero-cta-row">
@@ -207,7 +207,7 @@ export default function HomePage() {
       </section>
 
       <section className="impact-section reveal delay-1">
-        <p className="section-label">Why Teams Choose OpenClaw</p>
+        <p className="section-label">Why Teams Choose robolog.us</p>
         <h2 className="section-h2">Turn ideas into delivery-ready momentum</h2>
         <div className="impact-grid">
           {IMPACT_POINTS.map((point) => (
@@ -291,7 +291,7 @@ export default function HomePage() {
         <p className="section-label">Launch Paths</p>
         <h2 className="section-h2">Choose how you want to move from idea to execution</h2>
         <p className="section-sub">
-          Whether you are a solo founder or a full team, OpenClaw gives you a practical route to ship faster.
+          Whether you are a solo founder or a full team, robolog.us gives you a practical route to ship faster.
         </p>
         <div className="launch-paths-grid">
           {LAUNCH_PATHS.map((path) => (
