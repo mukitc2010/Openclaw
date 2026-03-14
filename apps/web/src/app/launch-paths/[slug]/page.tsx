@@ -52,9 +52,6 @@ export default async function LaunchPathPage({ params }: LaunchPathPageProps) {
           <Link href="/projects/new">
             <button className="btn-hero">Start This Path</button>
           </Link>
-          <Link href="/contact-sales">
-            <button className="secondary">Talk To Sales</button>
-          </Link>
         </div>
       </section>
     </div>
