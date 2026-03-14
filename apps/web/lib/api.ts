@@ -46,10 +46,22 @@ function createLocalProject(payload: ProjectCreate): ProjectRecord {
   };
 }
 
+function ensureLocalProjectGenerated(project: ProjectRecord): ProjectRecord {
+  const next = {
+    ...project,
+    epics: [...project.epics],
+    tasks: [...project.tasks],
+    assignments: [...project.assignments],
+    deliverables: project.deliverables ? { ...project.deliverables } : null,
+  };
+  return markLocalGenerated(next);
+}
+
 function getLocalProjectOrThrow(projectId: string): ProjectRecord {
   const found = loadLocalProjects().find((p) => p.id === projectId);
   if (!found) throw new Error("Project not found.");
-  return found;
+  const generated = ensureLocalProjectGenerated(found);
+  return upsertLocalProject(generated);
 }
 
 function upsertLocalProject(project: ProjectRecord): ProjectRecord {
@@ -217,7 +229,10 @@ export async function createProject(payload: ProjectCreate): Promise<ProjectReco
         endpoint,
       );
     },
-    () => upsertLocalProject(createLocalProject(payload)),
+    () => {
+      const generated = ensureLocalProjectGenerated(createLocalProject(payload));
+      return upsertLocalProject(generated);
+    },
   );
 }
 
