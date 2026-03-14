@@ -4814,3 +4814,89 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* Final overflow safety layer: keeps the UI within viewport on all devices. */
+html,
+body {
+  max-width: 100%;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+pre,
+code,
+.state-text,
+.project-card p,
+.agent-showcase-desc,
+.feature-card p,
+.hiw-card p,
+.section-sub {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 980px) {
+  .app-topbar {
+    position: static;
+  }
+
+  .topbar-inner {
+    height: auto;
+    min-height: 60px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .topbar-nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: thin;
+  }
+
+  .topbar-actions {
+    margin-left: auto;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .app-main,
+  main {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar-brand {
+    margin-right: 8px;
+  }
+
+  .brand-name {
+    font-size: 15px;
+  }
+
+  .quick-actions-trigger span {
+    display: none;
+  }
+
+  .stat-bar {
+    grid-template-columns: 1fr 1fr;
+  }
+}
