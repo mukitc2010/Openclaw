@@ -1,0 +1,46 @@
+name: Publish MCP Server Image
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "apps/mcp-server/**"
+      - "apps/mcp-server/Dockerfile"
+      - ".github/workflows/publish-mcp-image.yml"
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: openclaw-mcp-server
+
+jobs:
+  publish:
+    name: Build & Push MCP Image
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push MCP image
+        env:
+          REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build \
+            -t $REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+            -t $REGISTRY/$ECR_REPOSITORY:latest \
+            apps/mcp-server
+          docker push $REGISTRY/$ECR_REPOSITORY --all-tags
