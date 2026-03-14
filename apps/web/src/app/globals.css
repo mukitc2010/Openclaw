@@ -4165,6 +4165,12 @@ body {
   transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 
+.launch-path-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
 .launch-path-head {
   display: flex;
   justify-content: space-between;

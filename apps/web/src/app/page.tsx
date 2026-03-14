@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { listProjects } from "@/lib/api";
 import { AGENT_PROFILES } from "@/lib/agents";
+import { LAUNCH_PATHS } from "@/lib/launch-paths";
 import { ProjectRecord } from "@/types";
 
 const HOW_IT_WORKS = [
@@ -103,24 +104,6 @@ const FEATURES = [
       "Clear status transitions from planned to in-progress to shipped.",
       "Board-level visibility into blockers and delivery throughput.",
     ],
-  },
-];
-
-const LAUNCH_PATHS = [
-  {
-    title: "Founder Sprint",
-    desc: "Start with a short prompt and leave with a client-ready project blueprint in one session.",
-    eta: "~15 min",
-  },
-  {
-    title: "Agency Delivery Pack",
-    desc: "Generate PM, Agile, architecture, and handoff docs to kick off paid delivery immediately.",
-    eta: "~30 min",
-  },
-  {
-    title: "Product Team Mode",
-    desc: "Align roles across planning, implementation, and quality with one shared execution board.",
-    eta: "~45 min",
   },
 ];
 
@@ -335,7 +318,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="launch-paths-section reveal delay-2">
+      <section id="launch-paths" className="launch-paths-section reveal delay-2">
         <p className="section-label">Launch Paths</p>
         <h2 className="section-h2">Choose how you want to move from idea to execution</h2>
         <p className="section-sub">
@@ -343,13 +326,13 @@ export default function HomePage() {
         </p>
         <div className="launch-paths-grid">
           {LAUNCH_PATHS.map((path) => (
-            <article key={path.title} className="launch-path-card">
+            <Link key={path.slug} href={`/launch-paths/${path.slug}`} className="launch-path-card launch-path-link">
               <div className="launch-path-head">
                 <h4>{path.title}</h4>
                 <span className="launch-path-eta">{path.eta}</span>
               </div>
               <p>{path.desc}</p>
-            </article>
+            </Link>
           ))}
         </div>
       </section>
