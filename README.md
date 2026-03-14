@@ -64,8 +64,17 @@ npm install
 NEXT_PUBLIC_API_BASE_URL=http://localhost:8000 npm run dev
 ```
 
+Production docs URL setup:
+
+```bash
+NEXT_PUBLIC_API_BASE_URL=https://api.openclaw.ai
+NEXT_PUBLIC_API_DOCS_URL=https://api.openclaw.ai/docs
+NEXT_PUBLIC_API_REDOC_URL=https://api.openclaw.ai/redoc
+```
+
 ## Core API Endpoints
 
+- `GET /health`: API health/status
 - `POST /projects`: create project
 - `GET /projects`: list projects
 - `GET /projects/{project_id}`: project details
@@ -76,6 +85,7 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:8000 npm run dev
 - `POST /projects/{project_id}/generate/ai-engineering`: run AI engineering module
 - `POST /projects/{project_id}/generate/github`: run GitHub delivery module
 - `PATCH /projects/{project_id}/tasks/{task_id}`: update task status
+- `POST /projects/{project_id}/stories/{story_id}/start`: start a story (moves backlog tasks to in progress)
 - `GET /projects/{project_id}/status`: status timeline
 
 ## Agile and Planning Deliverables

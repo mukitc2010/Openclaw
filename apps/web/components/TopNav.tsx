@@ -14,6 +14,7 @@ export function TopNav() {
   const items = [
     { href: "/", label: "Dashboard" },
     { href: "/projects/new", label: "New Project" },
+    { href: "/docs", label: "API Docs" },
   ];
 
   return (
