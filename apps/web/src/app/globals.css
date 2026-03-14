@@ -4442,3 +4442,210 @@ body {
     display: none;
   }
 }
+
+/* Professional finish: clearer premium product presentation */
+
+body {
+  background:
+    radial-gradient(1200px 520px at -8% -18%, rgba(15, 79, 216, 0.18), transparent 58%),
+    radial-gradient(860px 420px at 108% -12%, rgba(245, 158, 11, 0.14), transparent 58%),
+    linear-gradient(180deg, #f8fbff 0%, #eef4fb 58%, #e8f0fa 100%);
+}
+
+.app-topbar {
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 14px 34px rgba(8, 19, 42, 0.08);
+  border-bottom: 1px solid rgba(197, 212, 232, 0.82);
+}
+
+.topbar-inner {
+  max-width: 1280px;
+}
+
+.topbar-brand {
+  gap: 12px;
+}
+
+.brand-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  box-shadow: 0 14px 28px rgba(18, 74, 190, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.32) inset;
+}
+
+.brand-name {
+  color: #0c1b34;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.topbar-nav-link,
+.top-nav-link {
+  font-weight: 600;
+  color: #4b6180;
+}
+
+.hero-banner {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(900px 360px at 10% -18%, rgba(107, 169, 255, 0.18), transparent 58%),
+    radial-gradient(760px 320px at 100% -10%, rgba(255, 193, 94, 0.18), transparent 56%),
+    linear-gradient(142deg, #081a3a 0%, #102b5a 46%, #174a95 100%);
+  box-shadow: 0 34px 60px rgba(9, 20, 44, 0.26);
+}
+
+.hero-banner::after {
+  content: "";
+  position: absolute;
+  inset: auto -8% -32% 40%;
+  height: 240px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.16), transparent 64%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  width: fit-content;
+  padding: 9px 14px;
+  border-radius: 999px;
+}
+
+.hero-headline {
+  color: #f7fbff;
+  letter-spacing: -0.05em;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #d9e9ff 45%, #ffd186 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.ghost-link {
+  color: #e6eefb;
+  font-weight: 600;
+}
+
+.ghost-link:hover {
+  color: #ffffff;
+}
+
+.stat-bar {
+  background: rgba(8, 19, 42, 0.42);
+  border: 1px solid rgba(202, 220, 245, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.trust-chip,
+.section-label {
+  box-shadow: 0 4px 12px rgba(13, 30, 66, 0.06);
+}
+
+.hiw-section,
+.agents-section,
+.features-section,
+.impact-section,
+.launch-paths-section,
+.card,
+.final-cta {
+  backdrop-filter: blur(8px);
+}
+
+.impact-card,
+.hiw-card,
+.feature-card,
+.project-card,
+.agent-showcase-card,
+.launch-path-card {
+  padding: 18px;
+  box-shadow: 0 10px 24px rgba(14, 28, 56, 0.07);
+}
+
+.impact-card h4,
+.hiw-card h4,
+.feature-card h5,
+.launch-path-head h4,
+.project-card h4,
+.agent-showcase-name {
+  color: #0f213f;
+}
+
+.agents-grid,
+.features-grid,
+.impact-grid,
+.hiw-grid,
+.launch-paths-grid,
+.project-grid {
+  gap: 14px;
+}
+
+.agent-showcase-card {
+  min-height: 252px;
+  position: relative;
+}
+
+.agent-showcase-top {
+  align-items: center;
+}
+
+.agent-showcase-tag {
+  background: rgba(15, 79, 216, 0.08);
+  border: 1px solid rgba(15, 79, 216, 0.16);
+  color: #2451a6;
+}
+
+.agent-showcase-link::after {
+  color: #123f97;
+}
+
+.feature-icon,
+.hiw-icon,
+.agent-showcase-icon {
+  filter: saturate(1.05);
+}
+
+.project-card .secondary,
+.pm-directive-clear-btn,
+.taskboard-filter,
+.agile-task-search {
+  border-color: rgba(190, 207, 230, 0.92);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.final-cta {
+  background:
+    radial-gradient(720px 240px at 0% -18%, rgba(40, 98, 232, 0.14), transparent 58%),
+    radial-gradient(620px 220px at 100% -20%, rgba(245, 158, 11, 0.14), transparent 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 250, 255, 0.95));
+}
+
+@media (max-width: 900px) {
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+  }
+
+  .hero-banner::after {
+    inset: auto -22% -36% 28%;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-banner {
+    box-shadow: 0 22px 40px rgba(9, 20, 44, 0.2);
+  }
+
+  .hero-badge {
+    font-size: 11px;
+  }
+
+  .impact-card,
+  .hiw-card,
+  .feature-card,
+  .project-card,
+  .agent-showcase-card,
+  .launch-path-card {
+    padding: 16px;
+  }
+}
