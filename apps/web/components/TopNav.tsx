@@ -15,6 +15,7 @@ export function TopNav() {
     { href: "/", label: "Dashboard" },
     { href: "/projects/new", label: "New Project" },
     { href: "/docs", label: "API Docs" },
+    { href: "/security", label: "Security" },
   ];
 
   return (

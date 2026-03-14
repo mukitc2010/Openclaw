@@ -6,6 +6,7 @@ import { QuickActions } from "@/components/QuickActions";
 import { ToastProvider } from "@/components/ToastProvider";
 import { TopNav } from "@/components/TopNav";
 import { UserBar } from "@/components/UserBar";
+import Link from "next/link";
 
 const headingFont = Space_Grotesk({
   subsets: ["latin"],
@@ -70,6 +71,33 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <main className="app-main">
                 {children}
               </main>
+              <footer className="site-footer" aria-label="Site footer">
+                <div className="site-footer-inner">
+                  <div className="site-footer-brand">
+                    <strong>robolog.us</strong>
+                    <p>Enterprise AI software delivery platform for planning, execution, and governed release workflows.</p>
+                  </div>
+                  <div className="site-footer-links">
+                    <div>
+                      <h4>Platform</h4>
+                      <Link href="/">Dashboard</Link>
+                      <Link href="/projects/new">New Project</Link>
+                      <Link href="/docs">API Docs</Link>
+                    </div>
+                    <div>
+                      <h4>Trust</h4>
+                      <Link href="/security">Security</Link>
+                      <Link href="/privacy">Privacy</Link>
+                      <Link href="/terms">Terms</Link>
+                    </div>
+                    <div>
+                      <h4>Contact</h4>
+                      <Link href="/book-demo">Book Demo</Link>
+                      <Link href="/contact-sales">Contact Sales</Link>
+                    </div>
+                  </div>
+                </div>
+              </footer>
             </div>
           </ToastProvider>
         </AuthProvider>
