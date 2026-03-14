@@ -56,6 +56,28 @@ export default function ProjectDetailPage() {
   }, [projectId]);
 
   useEffect(() => {
+    if (!projectId) {
+      return;
+    }
+    try {
+      const raw = window.localStorage.getItem(`openclaw:pm-directives:${projectId}`);
+      if (raw) {
+        const parsed = JSON.parse(raw) as { text: string; ts: string }[];
+        setPmLog(parsed);
+      }
+    } catch {
+      // Ignore malformed local data and continue with fresh state.
+    }
+  }, [projectId]);
+
+  useEffect(() => {
+    if (!projectId) {
+      return;
+    }
+    window.localStorage.setItem(`openclaw:pm-directives:${projectId}`, JSON.stringify(pmLog));
+  }, [pmLog, projectId]);
+
+  useEffect(() => {
     const onQuickAction = (event: Event) => {
       const custom = event as CustomEvent<{ action?: string }>;
       const action = custom.detail?.action;
@@ -156,6 +178,13 @@ export default function ProjectDetailPage() {
         pmLogRef.current.scrollTop = pmLogRef.current.scrollHeight;
       }
     }, 600);
+  }
+
+  function clearPmLog() {
+    setPmLog([]);
+    if (projectId) {
+      window.localStorage.removeItem(`openclaw:pm-directives:${projectId}`);
+    }
   }
 
   if (loading) {
@@ -271,13 +300,14 @@ export default function ProjectDetailPage() {
           onStatusChange={onTaskStatusChange}
           onStartStory={onStartStory}
           disabled={moduleRunning.length > 0}
+          densityStorageKey={`openclaw:agile-density:${projectId}`}
         />
       </section>
 
       {/* PM Directive Panel */}
       <section className="card pm-directive-panel reveal delay-2">
         <h3 className="section-title">PM Directive</h3>
-        <p className="state-text">Send a new instruction to all agents. Directives are logged below so agents can reference them.</p>
+        <p className="state-text">Send a new instruction to all agents. Directives are stored per project so your team can keep context across refreshes.</p>
         <div className="pm-directive-input-row">
           <textarea
             className="pm-directive-textarea"
@@ -287,14 +317,25 @@ export default function ProjectDetailPage() {
             rows={3}
             onKeyDown={(e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) sendPmDirective(); }}
           />
-          <button
-            className="pm-directive-send-btn"
-            onClick={sendPmDirective}
-            disabled={!pmDirective.trim() || sendingDirective}
-          >
-            {sendingDirective ? "Sending..." : "Send to Agents"}
-          </button>
+          <div className="pm-directive-actions">
+            <button
+              className="pm-directive-send-btn"
+              onClick={sendPmDirective}
+              disabled={!pmDirective.trim() || sendingDirective}
+            >
+              {sendingDirective ? "Sending..." : "Send to Agents"}
+            </button>
+            <button
+              className="secondary pm-directive-clear-btn"
+              onClick={clearPmLog}
+              disabled={pmLog.length === 0}
+              type="button"
+            >
+              Clear log
+            </button>
+          </div>
         </div>
+        <p className="state-text">Tip: press Cmd/Ctrl + Enter to send quickly.</p>
         {pmLog.length > 0 && (
           <div className="pm-directive-log" ref={pmLogRef}>
             {pmLog.map((entry, i) => (
@@ -304,6 +345,13 @@ export default function ProjectDetailPage() {
                 <span className="pm-directive-ts">{entry.ts}</span>
               </div>
             ))}
+          </div>
+        )}
+        {pmLog.length === 0 && (
+          <div className="empty-state compact">
+            <div className="empty-mark" aria-hidden="true" />
+            <h4>No directives yet</h4>
+            <p className="state-text">Your directive history for this project will appear here.</p>
           </div>
         )}
       </section>

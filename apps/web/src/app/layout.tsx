@@ -20,7 +20,7 @@ const bodyFont = IBM_Plex_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://openclaw.app"),
+  metadataBase: new URL("https://robolog.us"),
   title: {
     default: "OpenClaw | AI Software Delivery Platform",
     template: "%s | OpenClaw",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     title: "OpenClaw | AI Software Delivery Platform",
     description: "Generate PM, Agile, architecture, and GitHub delivery plans in one control room.",
     type: "website",
-    url: "https://openclaw.app",
+    url: "https://robolog.us",
     siteName: "OpenClaw",
   },
   twitter: {
