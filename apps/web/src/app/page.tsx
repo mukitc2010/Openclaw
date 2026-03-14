@@ -4,101 +4,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { listProjects } from "@/lib/api";
+import { AGENT_PROFILES } from "@/lib/agents";
 import { ProjectRecord } from "@/types";
-
-const ALL_AGENTS = [
-  {
-    icon: "📋",
-    name: "Project Manager",
-    tag: "PM",
-    desc: "Converts raw ideas into scoped delivery plans and milestones.",
-    outputs: ["Project scope and milestones", "Risks and dependencies", "Execution roadmap"],
-  },
-  {
-    icon: "📊",
-    name: "Business Analyst",
-    tag: "BA",
-    desc: "Defines user stories, acceptance criteria, and business outcomes.",
-    outputs: ["User stories and priorities", "Acceptance criteria", "Business KPI mapping"],
-  },
-  {
-    icon: "🏗️",
-    name: "Solution Architect",
-    tag: "ARCH",
-    desc: "Designs system topology, integrations, and technology choices.",
-    outputs: ["System architecture", "Service boundaries", "Integration strategy"],
-  },
-  {
-    icon: "🤖",
-    name: "AI Engineering",
-    tag: "AI",
-    desc: "Plans model usage, prompt strategy, and AI workflows.",
-    outputs: ["Model and prompt strategy", "AI workflow design", "Cost and latency guardrails"],
-  },
-  {
-    icon: "✏️",
-    name: "UI/UX Designer",
-    tag: "UX",
-    desc: "Shapes journeys, wireframes, and interaction patterns.",
-    outputs: ["User journey map", "Wireframe guidance", "Interaction patterns"],
-  },
-  {
-    icon: "🎨",
-    name: "Frontend Developer",
-    tag: "FE",
-    desc: "Implements responsive UI and client-side interactions.",
-    outputs: ["Component structure", "Responsive behavior", "State and interaction logic"],
-  },
-  {
-    icon: "⚙️",
-    name: "Backend Developer",
-    tag: "BE",
-    desc: "Builds APIs, core logic, and integration endpoints.",
-    outputs: ["API contracts", "Service logic", "3rd-party integrations"],
-  },
-  {
-    icon: "🗄️",
-    name: "Database Engineer",
-    tag: "DB",
-    desc: "Designs schemas, indexes, and query performance strategy.",
-    outputs: ["Data model and schema", "Index strategy", "Query performance plan"],
-  },
-  {
-    icon: "🚀",
-    name: "DevOps",
-    tag: "OPS",
-    desc: "Owns CI/CD, containers, release automation, and runtime ops.",
-    outputs: ["CI/CD workflow", "Deployment setup", "Monitoring and rollback plan"],
-  },
-  {
-    icon: "🧪",
-    name: "QA / Test",
-    tag: "QA",
-    desc: "Defines test plans for reliability across each module.",
-    outputs: ["Test matrix", "Regression checks", "Release quality gate"],
-  },
-  {
-    icon: "🔒",
-    name: "Security",
-    tag: "SEC",
-    desc: "Assesses auth, secrets, compliance, and threat models.",
-    outputs: ["Threat model", "Auth and secret policy", "Compliance checklist"],
-  },
-  {
-    icon: "🔍",
-    name: "Code Review",
-    tag: "CR",
-    desc: "Improves code quality, consistency, and maintainability.",
-    outputs: ["Code quality review", "Refactor opportunities", "Standards and consistency checks"],
-  },
-  {
-    icon: "🐙",
-    name: "GitHub",
-    tag: "GH",
-    desc: "Prepares branching, PR strategy, and release workflows.",
-    outputs: ["Branching strategy", "PR template and process", "Release workflow"],
-  },
-];
 
 const HOW_IT_WORKS = [
   {
@@ -151,7 +58,6 @@ export default function HomePage() {
   const [projects, setProjects] = useState<ProjectRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [agentHovered, setAgentHovered] = useState<number | null>(null);
 
   useEffect(() => {
     listProjects()
@@ -248,12 +154,11 @@ export default function HomePage() {
           Every role has a focused responsibility so projects move faster with less confusion.
         </p>
         <div className="agents-grid">
-          {ALL_AGENTS.map((agent, idx) => (
-            <article
-              key={agent.name}
-              className={`agent-showcase-card${agentHovered === idx ? " hovered" : ""}`}
-              onMouseEnter={() => setAgentHovered(idx)}
-              onMouseLeave={() => setAgentHovered(null)}
+          {AGENT_PROFILES.map((agent) => (
+            <Link
+              key={agent.slug}
+              href={`/agents/${agent.slug}`}
+              className="agent-showcase-card agent-showcase-link"
             >
               <div className="agent-showcase-top">
                 <span className="agent-showcase-icon">{agent.icon}</span>
@@ -266,7 +171,7 @@ export default function HomePage() {
                   <li key={output}>{output}</li>
                 ))}
               </ul>
-            </article>
+            </Link>
           ))}
         </div>
       </section>
