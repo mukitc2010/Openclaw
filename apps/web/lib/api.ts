@@ -1,5 +1,4 @@
 import { ProjectCreate, ProjectListResponse, ProjectRecord, StatusTimeline, TaskStatus } from "@/types";
-import { supabase } from "@/lib/supabase";
 import { getApiBaseUrl } from "@/lib/runtime-config";
 
 const API_BASE = getApiBaseUrl();
@@ -14,6 +13,8 @@ async function handle<T>(resp: Response): Promise<T> {
 
 /** Returns Authorization header when a Supabase session is active. */
 async function authHeaders(): Promise<Record<string, string>> {
+  if (typeof window === "undefined") return {};
+  const { supabase } = await import("@/lib/supabase");
   if (!supabase) return {};
   const { data } = await supabase.auth.getSession();
   if (!data.session) return {};
