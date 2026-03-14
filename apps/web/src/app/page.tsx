@@ -195,9 +195,6 @@ export default function HomePage() {
           <Link href="/projects/new">
             <button className="btn-hero">Start a Project</button>
           </Link>
-          <Link href="/book-demo">
-            <button className="secondary">Book Demo</button>
-          </Link>
           <a className="ghost-link" href="#agents">Meet the Agents</a>
         </div>
 
@@ -414,7 +411,6 @@ export default function HomePage() {
           <Link href="/contact-sales">
             <button className="secondary">Contact Sales</button>
           </Link>
-          <Link href="/book-demo" className="inline-link">Book Demo</Link>
           <Link href="/docs" className="inline-link">Explore API Docs</Link>
         </div>
       </section>

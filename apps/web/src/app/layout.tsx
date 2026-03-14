@@ -92,7 +92,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     </div>
                     <div>
                       <h4>Contact</h4>
-                      <Link href="/book-demo">Book Demo</Link>
                       <Link href="/contact-sales">Contact Sales</Link>
                     </div>
                   </div>
